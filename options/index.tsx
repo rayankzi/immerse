@@ -2,6 +2,8 @@ import "~/styles/global.css"
 
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
+import { UrlTable } from "~/components/url-table"
+import { columns, entries } from "~/components/url-table/columns"
 
 const Options = () => {
   return (
@@ -25,52 +27,10 @@ const Options = () => {
             <Button>Add</Button>
           </div>
 
-          <div className="rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="font-medium text-base">
-                  https://www.youtube.com/
-                </p>
-                <Button size="icon" variant="ghost">
-                  <XIcon className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="font-medium text-base">Option 2</p>
-                <Button size="icon" variant="ghost">
-                  <XIcon className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="font-medium text-base">Option 3</p>
-                <Button size="icon" variant="ghost">
-                  <XIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
+          <UrlTable columns={columns} data={entries} />
         </div>
       </div>
     </div>
-  )
-}
-
-function XIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round">
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </svg>
   )
 }
 
