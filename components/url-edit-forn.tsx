@@ -73,6 +73,13 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
     setUrlEntries(updatedEntries)
   }
 
+  const deleteEntry = () => {
+    const updatedEntries = urlEntries.filter(
+      (urlEntry) => urlEntry.url !== ogData.url
+    )
+    setUrlEntries(updatedEntries)
+  }
+
   return (
     <Dialog>
       <DropdownMenu>
@@ -90,12 +97,22 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
             Copy URL
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+
           <DropdownMenuItem onClick={() => switchEnableState()}>
             Disable
           </DropdownMenuItem>
+
           <DialogTrigger asChild>
             <DropdownMenuItem>Edit Row</DropdownMenuItem>
           </DialogTrigger>
+
+          <DropdownMenuItem onClick={() => switchEnableState()}>
+            Disable
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={() => deleteEntry()}>
+            Delete Row
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
