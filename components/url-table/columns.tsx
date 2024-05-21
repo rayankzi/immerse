@@ -72,8 +72,7 @@ export const columns: ColumnDef<UrlEntry>[] = [
               Copy URL
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Disable</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
