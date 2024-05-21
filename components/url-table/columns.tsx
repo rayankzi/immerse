@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu"
 import type { UrlEntry } from "~/types"
+import { UrlEditForm } from "~components/url-edit-forn"
 
 export const entries: UrlEntry[] = [
   {
@@ -54,26 +55,7 @@ export const columns: ColumnDef<UrlEntry>[] = [
     cell: ({ row }) => {
       const urlEntry = row.original
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(urlEntry.url)}>
-              Copy URL
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Disable</DropdownMenuItem>
-            <DropdownMenuItem>Edit Row</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+      return <UrlEditForm ogData={urlEntry} />
     }
   }
 ]
