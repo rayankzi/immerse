@@ -1,6 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
+
+import { useStorage } from "@plasmohq/storage/hook"
 
 import { Button } from "~/components/ui/button"
 import {
@@ -21,12 +24,33 @@ import {
   FormMessage
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
+import type { UrlEntry } from "~types"
 
 const formSchema = z.object({
   name: z.string().min(2).max(60),
   url: z.string().url().min(2)
 })
+
+const defaultEntries: UrlEntry[] = [
+  {
+    id: uuidv4(),
+    name: "YouTube",
+    url: "https://www.youtube.com/",
+    enabled: "Yes"
+  },
+  {
+    id: uuidv4(),
+    name: "TikTok",
+    url: "https://www.tiktok.com/",
+    enabled: "Yes"
+  },
+  {
+    id: uuidv4(),
+    name: "Instagram",
+    url: "https://www.instagram.com/",
+    enabled: "Yes"
+  }
+]
 
 export const UrlCreateForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,8 +60,15 @@ export const UrlCreateForm = () => {
       url: ""
     }
   })
+  const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
+    "url-entries",
+    defaultEntries
+  )
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {}
+  const onSubmit = ({ name, url }: z.infer<typeof formSchema>) => {
+    const id = uuidv4()
+    setUrlEntries([...urlEntries, { id, name, url, enabled: "Yes" }])
+  }
 
   return (
     <Dialog>

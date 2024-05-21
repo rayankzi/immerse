@@ -10,23 +10,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu"
-
-type UrlEntry = {
-  name: string
-  url: string
-  enabled: "Yes" | "No"
-}
+import type { UrlEntry } from "~/types"
 
 export const entries: UrlEntry[] = [
   {
     name: "Youtube",
     url: "https://www.youtube.com/",
-    enabled: "Yes"
+    enabled: "Yes",
+    id: "qw"
   },
   {
     name: "Instagram",
     url: "https://www.instagram.com/",
-    enabled: "No"
+    enabled: "No",
+    id: "s"
   }
 ]
 
@@ -73,6 +70,7 @@ export const columns: ColumnDef<UrlEntry>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Disable</DropdownMenuItem>
+            <DropdownMenuItem>Edit Row</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

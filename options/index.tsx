@@ -1,13 +1,17 @@
 import "~/styles/global.css"
 
+import { Loader } from "lucide-react"
+
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { UrlCreateForm } from "~/components/url-create-form"
 import { UrlTable } from "~/components/url-table"
-import { columns, entries } from "~/components/url-table/columns"
+import { columns } from "~/components/url-table/columns"
+import type { UrlEntry } from "~types"
 
 const Options = () => {
-  const [checked, setChecked] = useStorage("checked", true)
+  const [urlEntries] = useStorage<UrlEntry[]>("url-entries")
+  console.log(urlEntries)
 
   return (
     <div className="container mx-auto max-w-2xl py-12">
@@ -26,7 +30,16 @@ const Options = () => {
             <UrlCreateForm />
           </div>
 
-          <UrlTable columns={columns} data={entries} />
+          {urlEntries ? (
+            <UrlTable columns={columns} data={urlEntries} />
+          ) : (
+            <div className="flex h-[50vh] w-full items-center justify-center">
+              <div className="flex flex-col items-center gap-4">
+                <Loader className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
+                <p className="text-gray-500 dark:text-gray-400">Loading...</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
