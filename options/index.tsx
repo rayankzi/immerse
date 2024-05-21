@@ -4,6 +4,7 @@ import { Loader } from "lucide-react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { Toaster } from "~/components/ui/toaster"
 import { UrlCreateForm } from "~/components/url-create-form"
 import { UrlTable } from "~/components/url-table"
 import { columns } from "~/components/url-table/columns"
@@ -42,6 +43,8 @@ const Options = () => {
           )}
         </div>
       </div>
+
+      <Toaster />
     </div>
   )
 }

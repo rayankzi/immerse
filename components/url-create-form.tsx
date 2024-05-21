@@ -25,6 +25,7 @@ import {
   FormMessage
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
+import { useToast } from "~/components/ui/use-toast"
 import type { UrlEntry } from "~types"
 
 const formSchema = z.object({
@@ -65,9 +66,28 @@ export const UrlCreateForm = () => {
     "url-entries",
     defaultEntries
   )
+  const { toast } = useToast()
 
   const onSubmit = ({ name, url }: z.infer<typeof formSchema>) => {
     const id = uuidv4()
+
+    if (urlEntries.filter((entry) => entry.name === name).length > 0) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "An entry already has this name!"
+      })
+      return
+    }
+    if (urlEntries.filter((entry) => entry.url === url).length > 0) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "An entry already has this URL!"
+      })
+      return
+    }
+
     setUrlEntries([
       ...urlEntries,
       { id, name: name.trim(), url: url.trim(), enabled: "Yes" }
