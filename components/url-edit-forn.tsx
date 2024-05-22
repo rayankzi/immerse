@@ -96,19 +96,15 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
             onClick={() => navigator.clipboard.writeText(ogData.url)}>
             Copy URL
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
 
           <DropdownMenuItem onClick={() => switchEnableState()}>
             Disable
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
 
           <DialogTrigger asChild>
             <DropdownMenuItem>Edit Row</DropdownMenuItem>
           </DialogTrigger>
-
-          <DropdownMenuItem onClick={() => switchEnableState()}>
-            Disable
-          </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => deleteEntry()}>
             Delete Row
