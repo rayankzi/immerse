@@ -1,6 +1,7 @@
 import "~/styles/global.css"
 
 import { Loader } from "lucide-react"
+import { v4 as uuidv4 } from "uuid"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -10,9 +11,32 @@ import { UrlTable } from "~/components/url-table"
 import { columns } from "~/components/url-table/columns"
 import type { UrlEntry } from "~types"
 
+const defaultEntries: UrlEntry[] = [
+  {
+    id: uuidv4(),
+    name: "YouTube",
+    url: "https://www.youtube.com/",
+    enabled: "Yes"
+  },
+  {
+    id: uuidv4(),
+    name: "TikTok",
+    url: "https://www.tiktok.com/",
+    enabled: "Yes"
+  },
+  {
+    id: uuidv4(),
+    name: "Instagram",
+    url: "https://www.instagram.com/",
+    enabled: "Yes"
+  }
+]
+
 const Options = () => {
-  const [urlEntries] = useStorage<UrlEntry[]>("url-entries")
-  console.log(urlEntries)
+  const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
+    "url-entries",
+    (entries) => (entries === undefined ? defaultEntries : entries)
+  )
 
   return (
     <div className="container mx-auto max-w-2xl py-12">

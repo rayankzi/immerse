@@ -33,27 +33,6 @@ const formSchema = z.object({
   url: z.string().url().min(2)
 })
 
-const defaultEntries: UrlEntry[] = [
-  {
-    id: uuidv4(),
-    name: "YouTube",
-    url: "https://www.youtube.com/",
-    enabled: "Yes"
-  },
-  {
-    id: uuidv4(),
-    name: "TikTok",
-    url: "https://www.tiktok.com/",
-    enabled: "Yes"
-  },
-  {
-    id: uuidv4(),
-    name: "Instagram",
-    url: "https://www.instagram.com/",
-    enabled: "Yes"
-  }
-]
-
 export const UrlCreateForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,10 +41,7 @@ export const UrlCreateForm = () => {
       url: ""
     }
   })
-  const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
-    "url-entries",
-    defaultEntries
-  )
+  const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
   const { toast } = useToast()
 
   const onSubmit = ({ name, url }: z.infer<typeof formSchema>) => {
