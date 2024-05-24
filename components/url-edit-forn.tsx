@@ -98,7 +98,7 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => switchEnableState()}>
-            Disable
+            {ogData.enabled === "Yes" ? "Disable" : "Enable"}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 

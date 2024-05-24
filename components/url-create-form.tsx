@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
@@ -26,7 +27,7 @@ import {
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
 import { useToast } from "~/components/ui/use-toast"
-import type { UrlEntry } from "~types"
+import type { UrlEntry } from "~/types"
 
 const formSchema = z.object({
   name: z.string().min(2).max(60),
@@ -73,7 +74,12 @@ export const UrlCreateForm = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add URL</Button>
+        <Button size="sm" className="h-8 gap-1">
+          <PlusCircle className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Add URL
+          </span>
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
