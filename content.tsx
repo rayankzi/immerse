@@ -13,23 +13,10 @@ export const getStyle: PlasmoGetStyle = () => {
 }
 
 const Warning = () => {
-  // const [urls, setUrls] = useState<string[]>([])
-  // const [onForbiddenPage, setOnForbiddenPage] = useState(false)
-  // const [loading, setLoading] = useState(true)
+  const [urls, setUrls] = useState<string[]>([])
+  const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
 
-  // useEffect(() => {
-  //   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
-  //   const enabledUrls = urlEntries
-  //     ? urlEntries.map((urlEntry) => urlEntry.url)
-  //     : []
-  //   setUrls(enabledUrls)
-
-  //   urls.forEach((url) => {
-  //     if (window.location.href.startsWith(url)) setOnForbiddenPage(true)
-  //   })
-
-  //   setLoading(false)
-  // }, [])
+  console.log(urls)
 
   // if (loading) return <></>
 

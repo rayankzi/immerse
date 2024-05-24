@@ -8,7 +8,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { Toaster } from "~/components/ui/toaster"
 import { UrlTable } from "~/components/url-table"
 import { columns } from "~/components/url-table/columns"
-import type { UrlEntry } from "~types"
+import type { UrlEntry } from "~/types"
 
 const defaultEntries: UrlEntry[] = [
   {

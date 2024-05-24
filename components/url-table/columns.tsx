@@ -1,7 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
 
+import { UrlEditForm } from "~/components/url-edit-forn"
 import type { UrlEntry } from "~/types"
-import { UrlEditForm } from "~components/url-edit-forn"
 
 export const entries: UrlEntry[] = [
   {
