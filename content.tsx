@@ -15,29 +15,36 @@ export const getStyle: PlasmoGetStyle = () => {
 const Warning = () => {
   const [urls, setUrls] = useState<string[]>([])
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
+  const [onForbiddenPage, setOnForbiddenPage] = useState(false)
 
-  console.log(urls)
+  useEffect(() => {
+    if (urlEntries) {
+      const newUrls = urlEntries.map(
+        (entry) => entry.enabled === "Yes" && entry.url
+      )
+      setUrls(newUrls)
+    }
+  }, [urlEntries])
 
-  // if (loading) return <></>
-
-  // console.log(onForbiddenPage)
-
-  return (
-    <></>
-    // <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-    //   <div className="text-center flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg">
-    //     <h1 className="text-3xl font-bold mb-4 text-black">
-    //       What are you doing?
-    //     </h1>
-    //     <img
-    //       src="https://media1.tenor.com/m/nCfArwGenA0AAAAd/the-rock-raising-eyebrow.gif"
-    //       alt="A funny GIF"
-    //       className="w-80 h-80"
-    //     />
-    //     <p className="text-5xl font-bold text-red-600 pt-4">GO BACK TO WORK!</p>
-    //   </div>
-    // </div>
-  )
+  if (urls.includes(window.location.href) || onForbiddenPage)
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="text-center flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg">
+          <h1 className="text-3xl font-bold mb-4 text-black">
+            What are you doing?
+          </h1>
+          <img
+            src="https://media1.tenor.com/m/nCfArwGenA0AAAAd/the-rock-raising-eyebrow.gif"
+            alt="A funny GIF"
+            className="w-80 h-80"
+          />
+          <p className="text-5xl font-bold text-red-600 pt-4">
+            GO BACK TO WORK!
+          </p>
+        </div>
+      </div>
+    )
+  else return <></>
 }
 
 export default Warning
