@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table"
 
+import { Badge } from "~/components/ui/badge"
 import { UrlEditForm } from "~/components/url-edit-forn"
 import type { UrlEntry } from "~/types"
 
@@ -25,7 +26,12 @@ export const columns: ColumnDef<UrlEntry>[] = [
   },
   {
     accessorKey: "blocked",
-    header: "Blocked"
+    header: "Blocked",
+    cell: ({
+      row: {
+        original: { blocked }
+      }
+    }) => <Badge variant="outline">{blocked}</Badge>
   },
   {
     accessorKey: "url",
