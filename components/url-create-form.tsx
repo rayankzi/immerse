@@ -67,7 +67,7 @@ export const UrlCreateForm = () => {
 
     setUrlEntries([
       ...urlEntries,
-      { id, name: name.trim(), url: url.trim(), enabled: "Yes" }
+      { id, name: name.trim(), url: url.trim(), blocked: "Yes" }
     ])
   }
 

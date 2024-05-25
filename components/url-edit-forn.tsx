@@ -62,11 +62,11 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
     setUrlEntries(updatedEntries)
   }
 
-  const switchEnableState = () => {
-    const newEnabledState = ogData.enabled === "Yes" ? "No" : "Yes"
+  const switchBlockedState = () => {
+    const newBlockedState = ogData.blocked === "Yes" ? "No" : "Yes"
     const updatedEntries = urlEntries.map((urlEntry) =>
       urlEntry.url === ogData.url
-        ? { ...urlEntry, enabled: newEnabledState }
+        ? { ...urlEntry, blocked: newBlockedState }
         : urlEntry
     ) as UrlEntry[]
 
@@ -97,8 +97,8 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
             Copy URL
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => switchEnableState()}>
-            {ogData.enabled === "Yes" ? "Disable" : "Enable"}
+          <DropdownMenuItem onClick={() => switchBlockedState()}>
+            {ogData.blocked === "Yes" ? "Unblock" : "Block"}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 

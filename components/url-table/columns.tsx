@@ -7,13 +7,13 @@ export const entries: UrlEntry[] = [
   {
     name: "Youtube",
     url: "https://www.youtube.com/",
-    enabled: "Yes",
+    blocked: "Yes",
     id: "qw"
   },
   {
     name: "Instagram",
     url: "https://www.instagram.com/",
-    enabled: "No",
+    blocked: "No",
     id: "s"
   }
 ]
@@ -24,8 +24,8 @@ export const columns: ColumnDef<UrlEntry>[] = [
     header: "Name"
   },
   {
-    accessorKey: "enabled",
-    header: "Enabled"
+    accessorKey: "blocked",
+    header: "Blocked"
   },
   {
     accessorKey: "url",
