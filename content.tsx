@@ -16,6 +16,7 @@ const Warning = () => {
   const [urls, setUrls] = useState<string[]>([])
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
   const [onForbiddenPage, setOnForbiddenPage] = useState(false)
+  const currentUrl = window.location.href
 
   useEffect(() => {
     if (urlEntries) {
@@ -26,7 +27,7 @@ const Warning = () => {
     }
   }, [urlEntries])
 
-  if (urls.includes(window.location.href) || onForbiddenPage)
+  if (urls.includes(currentUrl))
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
         <div className="text-center flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg">
