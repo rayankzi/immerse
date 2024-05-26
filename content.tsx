@@ -15,13 +15,12 @@ export const getStyle: PlasmoGetStyle = () => {
 const Warning = () => {
   const [urls, setUrls] = useState<string[]>([])
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
-  const [onForbiddenPage, setOnForbiddenPage] = useState(false)
   const currentUrl = window.location.href
 
   useEffect(() => {
     if (urlEntries) {
       const newUrls = urlEntries.map(
-        (entry) => entry.enabled === "Yes" && entry.url
+        (entry) => entry.blocked === "Yes" && entry.url
       )
       setUrls(newUrls)
     }
