@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+
+import { Storage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import { CircularProgressBar } from "~/components/circular-progress-bar"
 import { Button } from "~/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
@@ -19,7 +21,7 @@ interface TimerProps {
 type DestructiveButton = "none" | "stop" | "reset"
 
 export const Timer = ({ type, initialDuration }: TimerProps) => {
-  const [timeLeft, setTimeLeft] = useState(initialDuration) // Time left in seconds
+  const [timeLeft, setTimeLeft] = useState<number>(initialDuration)
   const totalTime = initialDuration
   const [destructiveButton, setDestructiveButton] =
     useState<DestructiveButton>("none")
@@ -28,30 +30,37 @@ export const Timer = ({ type, initialDuration }: TimerProps) => {
     alert(`${type.charAt(0).toUpperCase() + type.slice(1)} Timer has finished!`)
 
   useEffect(() => {
-    const getTimeFromBackground = () => {
+    const getTimeFromBackground = () =>
       chrome.runtime.sendMessage({ action: "getTime" }, (response) => {
-        setTimeLeft(response.timeLeft)
+        setTimeLeft(response.timeLeft as number)
       })
-    }
+
+    if (timeLeft === 0) onTimerFinish()
+
+    const getDestructiveButtonFromBackground = () =>
+      chrome.runtime.sendMessage(
+        { action: "getDestructiveButton" },
+        (response) => setDestructiveButton(response.destructiveButton)
+      )
 
     getTimeFromBackground()
-    const interval = setInterval(getTimeFromBackground, 1000)
+    getDestructiveButtonFromBackground()
+    chrome.storage.local.set({ type })
+
+    const interval = setInterval(() => {
+      getTimeFromBackground()
+      getDestructiveButtonFromBackground()
+    }, 1000)
+
     return () => clearInterval(interval)
   }, [])
 
-  const startTimer = () => {
-    chrome.runtime.sendMessage({ action: "start" })
-    setDestructiveButton("stop")
-  }
-  const stopTimer = () => {
-    chrome.runtime.sendMessage({ action: "stop" })
-    setDestructiveButton("reset")
-  }
+  const startTimer = () => chrome.runtime.sendMessage({ action: "start" })
+  const stopTimer = () => chrome.runtime.sendMessage({ action: "stop" })
 
   const resetTimer = () => {
-    chrome.runtime.sendMessage({ action: "reset" })
     setTimeLeft(initialDuration)
-    setDestructiveButton("none")
+    chrome.runtime.sendMessage({ action: "reset" })
   }
 
   const formatTime = (seconds: number) => {
