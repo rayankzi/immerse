@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react"
-
-import { Storage } from "@plasmohq/storage"
-import { useStorage } from "@plasmohq/storage/hook"
+import { useEffect, useRef, useState } from "react"
 
 import { CircularProgressBar } from "~/components/circular-progress-bar"
 import { Button } from "~/components/ui/button"
@@ -21,8 +18,11 @@ interface TimerProps {
 type DestructiveButton = "none" | "stop" | "reset"
 
 export const Timer = ({ type, initialDuration }: TimerProps) => {
-  const [timeLeft, setTimeLeft] = useState<number>(initialDuration)
-  const totalTime = initialDuration
+  const [progress, setProgress] = useState(100)
+  const [isRunning, setIsRunning] = useState(false)
+  const [duration] = useState(initialDuration)
+  const [timeLeft, setTimeLeft] = useState(initialDuration)
+  const intervalRef = useRef(null)
   const [destructiveButton, setDestructiveButton] =
     useState<DestructiveButton>("none")
 
@@ -30,37 +30,41 @@ export const Timer = ({ type, initialDuration }: TimerProps) => {
     alert(`${type.charAt(0).toUpperCase() + type.slice(1)} Timer has finished!`)
 
   useEffect(() => {
-    const getTimeFromBackground = () =>
-      chrome.runtime.sendMessage({ action: "getTime" }, (response) => {
-        setTimeLeft(response.timeLeft as number)
-      })
+    if (isRunning) {
+      intervalRef.current = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(intervalRef.current)
+            setIsRunning(false)
+            onTimerFinish()
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+    } else clearInterval(intervalRef.current)
 
-    if (timeLeft === 0) onTimerFinish()
+    return () => clearInterval(intervalRef.current)
+  }, [isRunning])
 
-    const getDestructiveButtonFromBackground = () =>
-      chrome.runtime.sendMessage(
-        { action: "getDestructiveButton" },
-        (response) => setDestructiveButton(response.destructiveButton)
-      )
+  useEffect(() => {
+    setProgress((timeLeft / duration) * 100)
+  }, [timeLeft, duration])
 
-    getTimeFromBackground()
-    getDestructiveButtonFromBackground()
-    chrome.storage.local.set({ type })
-
-    const interval = setInterval(() => {
-      getTimeFromBackground()
-      getDestructiveButtonFromBackground()
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const startTimer = () => chrome.runtime.sendMessage({ action: "start" })
-  const stopTimer = () => chrome.runtime.sendMessage({ action: "stop" })
+  const startTimer = () => {
+    if (timeLeft > 0) setIsRunning(true)
+    setDestructiveButton("stop")
+  }
+  const stopTimer = () => {
+    setIsRunning(false)
+    setDestructiveButton("reset")
+  }
 
   const resetTimer = () => {
+    setIsRunning(false)
     setTimeLeft(initialDuration)
-    chrome.runtime.sendMessage({ action: "reset" })
+    setProgress(100)
+    setDestructiveButton("none")
   }
 
   const formatTime = (seconds: number) => {
@@ -68,8 +72,6 @@ export const Timer = ({ type, initialDuration }: TimerProps) => {
     const remainingSeconds = seconds % 60
     return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`
   }
-
-  const getProgress = () => (timeLeft / totalTime) * 100
 
   return (
     <Card>
@@ -81,7 +83,7 @@ export const Timer = ({ type, initialDuration }: TimerProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        <CircularProgressBar progress={getProgress()} size={110}>
+        <CircularProgressBar progress={progress} size={110}>
           {formatTime(timeLeft)}
         </CircularProgressBar>
       </CardContent>
