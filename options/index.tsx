@@ -22,6 +22,7 @@ import {
 } from "~/components/ui/breadcrumb"
 import { Button } from "~/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { Toaster } from "~/components/ui/toaster"
 import {
   Tooltip,
@@ -69,14 +70,14 @@ const Options = () => {
               href="#"
               className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-black text-lg font-semibold text-white md:h-8 md:w-8 md:text-base">
               <Folder className="h-4 w-4 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
+              <span className="sr-only">Options</span>
             </a>
 
             <Tooltip>
               <TooltipTrigger asChild>
                 <a
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8">
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-[color:hsl(215.4,16.3%,46.9%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
                   <Globe className="h-5 w-5" />
                   <span className="sr-only">URLs</span>
                 </a>
@@ -88,7 +89,7 @@ const Options = () => {
               <TooltipTrigger asChild>
                 <a
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8">
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-[color:hsl(210,40%,96.1%)] text-[color:hsl(222.2,47.4%,11.2%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
                   <SquareCheckBig className="h-5 w-5" />
                   <span className="sr-only">Tasks</span>
                 </a>
@@ -102,7 +103,7 @@ const Options = () => {
               <TooltipTrigger asChild>
                 <a
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8">
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-[color:hsl(215.4,16.3%,46.9%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
                   <Settings className="h-5 w-5" />
                   <span className="sr-only">Settings</span>
                 </a>
@@ -125,19 +126,19 @@ const Options = () => {
                 <nav className="grid gap-6 text-lg font-medium">
                   <a
                     href="#"
-                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base">
+                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[color:hsl(222.2,47.4%,11.2%)] text-lg font-semibold text-[color:hsl(210,40%,98%)] md:text-base">
                     <Folder className="h-5 w-5 transition-all group-hover:scale-110" />
                     <span className="sr-only">Options</span>
                   </a>
                   <a
                     href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
+                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]">
                     <Globe className="h-5 w-5" />
                     URLs
                   </a>
                   <a
                     href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
+                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]">
                     <SquareCheckBig className="h-5 w-5" />
                     Tasks
                   </a>
