@@ -5,7 +5,7 @@ import "~/styles/global.css"
 import { useEffect, useState } from "react"
 
 import { Skeleton } from "~/components/ui/skeleton"
-import { ConciseUrlTable } from "~/components/url-table/concise"
+import { ConciseUrlTable } from "~/components/url-table"
 import type { UrlEntry } from "~/types"
 import { buttonVariants } from "~components/ui/button"
 import { cn } from "~lib/utils"
