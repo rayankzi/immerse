@@ -8,6 +8,7 @@ import {
   Settings,
   SquareCheckBig
 } from "lucide-react"
+import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
 import { useStorage } from "@plasmohq/storage/hook"
@@ -22,7 +23,6 @@ import {
 } from "~/components/ui/breadcrumb"
 import { Button } from "~/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { Toaster } from "~/components/ui/toaster"
 import {
   Tooltip,
@@ -33,6 +33,9 @@ import {
 import { UrlTable } from "~/components/url-table"
 import { columns } from "~/components/url-table/columns"
 import type { UrlEntry } from "~/types"
+import { cn } from "~lib/utils"
+
+type PageState = "urls" | "tasks"
 
 const defaultEntries: UrlEntry[] = [
   {
@@ -55,11 +58,31 @@ const defaultEntries: UrlEntry[] = [
   }
 ]
 
+const RenderUrlTable = ({ urlEntries }: { urlEntries: UrlEntry[] | null }) => {
+  if (urlEntries) return <UrlTable columns={columns} data={urlEntries} />
+  else
+    return (
+      <div className="flex h-[50vh] w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
+          <p className="text-gray-500 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
+}
+
 const Options = () => {
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
     "url-entries",
     (entries) => (entries === undefined ? defaultEntries : entries)
   )
+
+  const [pageState, setPageState] = useState<PageState>("urls")
+
+  const inactiveSidebarItem =
+    "text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]"
+  const activeSidebarItem =
+    "bg-[color:hsl(210,40%,96.1%)] text-[color:hsl(222.2,47.4%,11.2%)] hover:text-[color:hsl(222.2,84%,4.9%)]"
 
   return (
     <TooltipProvider>
@@ -74,25 +97,33 @@ const Options = () => {
             </a>
 
             <Tooltip>
-              <TooltipTrigger asChild>
-                <a
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-[color:hsl(215.4,16.3%,46.9%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
+              <TooltipTrigger asChild onClick={() => setPageState("urls")}>
+                <p
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 cursor-pointer",
+                    pageState === "urls"
+                      ? activeSidebarItem
+                      : inactiveSidebarItem
+                  )}>
                   <Globe className="h-5 w-5" />
                   <span className="sr-only">URLs</span>
-                </a>
+                </p>
               </TooltipTrigger>
               <TooltipContent side="right">URLs</TooltipContent>
             </Tooltip>
 
             <Tooltip>
-              <TooltipTrigger asChild>
-                <a
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-[color:hsl(210,40%,96.1%)] text-[color:hsl(222.2,47.4%,11.2%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
+              <TooltipTrigger asChild onClick={() => setPageState("tasks")}>
+                <p
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 cursor-pointer",
+                    pageState === "tasks"
+                      ? activeSidebarItem
+                      : inactiveSidebarItem
+                  )}>
                   <SquareCheckBig className="h-5 w-5" />
                   <span className="sr-only">Tasks</span>
-                </a>
+                </p>
               </TooltipTrigger>
               <TooltipContent side="right">Tasks</TooltipContent>
             </Tooltip>
@@ -122,6 +153,7 @@ const Options = () => {
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
+
               <SheetContent side="left" className="sm:max-w-xs">
                 <nav className="grid gap-6 text-lg font-medium">
                   <a
@@ -130,18 +162,20 @@ const Options = () => {
                     <Folder className="h-5 w-5 transition-all group-hover:scale-110" />
                     <span className="sr-only">Options</span>
                   </a>
-                  <a
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]">
+
+                  <p
+                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]"
+                    onClick={() => setPageState("urls")}>
                     <Globe className="h-5 w-5" />
                     URLs
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]">
+                  </p>
+
+                  <p
+                    className="flex items-center gap-4 px-2.5 text-[color:hsl(215.4,16.3%,46.9%)] hover:text-[color:hsl(222.2,84%,4.9%)]"
+                    onClick={() => setPageState("tasks")}>
                     <SquareCheckBig className="h-5 w-5" />
                     Tasks
-                  </a>
+                  </p>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -165,21 +199,18 @@ const Options = () => {
                 <BreadcrumbSeparator />
 
                 <BreadcrumbItem>
-                  <BreadcrumbPage>URLs</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    {pageState === "urls" ? "URLs" : "Tasks"}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </header>
 
-          {urlEntries ? (
-            <UrlTable columns={columns} data={urlEntries} />
+          {pageState === "urls" ? (
+            <RenderUrlTable urlEntries={urlEntries} />
           ) : (
-            <div className="flex h-[50vh] w-full items-center justify-center">
-              <div className="flex flex-col items-center gap-4">
-                <Loader className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
-                <p className="text-gray-500 dark:text-gray-400">Loading...</p>
-              </div>
-            </div>
+            <div>Ho</div>
           )}
         </div>
       </div>
