@@ -1,7 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { Loader } from "lucide-react"
 
-import { UrlCreateForm } from "~/components/forms/url-create-form"
+import { TaskCreateForm } from "~/components/forms/task-create-form"
 import { DataTable } from "~/components/tables/data-table"
 import { Badge } from "~/components/ui/badge"
 import { capitalize } from "~/lib/utils"
@@ -52,7 +52,7 @@ const TaskTable = ({ data }: TaskTableProps) => {
       searchTerm="description"
       title="Tasks"
       description="Manage what you have to do today.">
-      <UrlCreateForm />
+      <TaskCreateForm />
     </DataTable>
   )
 }
