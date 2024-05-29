@@ -34,14 +34,12 @@ import {
   SelectValue
 } from "~/components/ui/select"
 import { useToast } from "~/components/ui/use-toast"
-import type { Task } from "~/types"
+import type { PriorityType, Task } from "~/types"
 
 const formSchema = z.object({
   description: z.string().min(2).max(100),
   priority: z.string().min(2)
 })
-
-type PriorityType = "low" | "medium" | "high"
 
 export const TaskCreateForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({

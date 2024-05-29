@@ -5,9 +5,11 @@ export type UrlEntry = {
   blocked: "Yes" | "No"
 }
 
+export type PriorityType = "low" | "medium" | "high"
+
 export type Task = {
   id: string
   description: string
-  priority: "low" | "medium" | "high"
+  priority: PriorityType
   completed: boolean
 }

@@ -33,7 +33,14 @@ import {
   FormMessage
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
-import type { Task } from "~/types"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "~/components/ui/select"
+import type { PriorityType, Task } from "~/types"
 
 const formSchema = z.object({
   description: z.string().min(2).max(100),
@@ -54,13 +61,15 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
   })
   const [tasks, setTasks] = useStorage<Task[]>("tasks")
 
-  // const onSubmit = ({ name, url }: z.infer<typeof formSchema>) => {
-  //   const updatedEntries = urlEntries.map((urlEntry) =>
-  //     urlEntry.url === ogData.url ? { ...urlEntry, name, url } : urlEntry
-  //   )
+  const onSubmit = ({ description, priority }: z.infer<typeof formSchema>) => {
+    const updatedTasks = tasks.map((task) =>
+      task.description === task.description
+        ? { ...task, description, priority: priority as PriorityType }
+        : task
+    )
 
-  //   setUrlEntries(updatedEntries)
-  // }
+    setTasks(updatedTasks)
+  }
 
   const switchCompletedState = () => {
     const updatedTasks = tasks.map((task) =>
@@ -113,11 +122,11 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
           <DialogDescription>Edit an existing task here.</DialogDescription>
         </DialogHeader>
 
-        {/* <Form {...form}>
+        <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
             <FormField
               control={form.control}
-              name="name"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
@@ -134,16 +143,25 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
 
             <FormField
               control={form.control}
-              name="url"
+              name="priority"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://www.youtube.com/" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is the URL you want blacklisted.
-                  </FormDescription>
+                  <FormLabel>Priority</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="How important is your task?" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>How important the task is</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -153,7 +171,7 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
               <Button type="submit">Submit</Button>
             </DialogClose>
           </form>
-        </Form> */}
+        </Form>
       </DialogContent>
     </Dialog>
   )
