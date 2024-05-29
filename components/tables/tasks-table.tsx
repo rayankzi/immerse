@@ -6,6 +6,7 @@ import { DataTable } from "~/components/tables/data-table"
 import { Badge } from "~/components/ui/badge"
 import { capitalize } from "~/lib/utils"
 import type { Task } from "~/types"
+import { TaskEditForm } from "~components/forms/task-edit-form"
 
 interface TaskTableProps {
   data: Task[]
@@ -33,15 +34,15 @@ const columns: ColumnDef<Task>[] = [
         original: { completed }
       }
     }) => <p>{capitalize(completed.toString())}</p>
-  }
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => {
-  //     const urlEntry = row.original
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const task = row.original
 
-  //     return <UrlEditForm ogData={urlEntry} />
-  //   }
-  // }
+      return <TaskEditForm ogData={task} />
+    }
+  }
 ]
 
 const TaskTable = ({ data }: TaskTableProps) => {
