@@ -44,6 +44,7 @@ const UrlTable = ({ data }: UrlTableProps) => {
     <DataTable
       columns={columns}
       data={data}
+      searchTerm="name"
       title="URL Entries"
       description="Manage your URLs and if they are blocked or not">
       <UrlCreateForm />

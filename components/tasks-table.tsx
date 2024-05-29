@@ -44,6 +44,7 @@ const TaskTable = ({ data }: TaskTableProps) => {
     <DataTable
       columns={columns}
       data={data}
+      searchTerm="description"
       title="Tasks"
       description="Manage what you have to do today.">
       <UrlCreateForm />

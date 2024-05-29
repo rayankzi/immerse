@@ -43,6 +43,7 @@ import {
 interface DataTableProps<TData, TValue> {
   title: string
   description: string
+  searchTerm: string
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   children: React.ReactNode
@@ -53,7 +54,8 @@ export function DataTable<TData, TValue>({
   description,
   columns,
   data,
-  children
+  children,
+  searchTerm
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -84,9 +86,11 @@ export function DataTable<TData, TValue>({
           <Input
             type="search"
             placeholder="Search..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn(searchTerm)?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn(searchTerm)?.setFilterValue(event.target.value)
             }
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
