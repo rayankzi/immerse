@@ -69,6 +69,11 @@ export const UrlCreateForm = () => {
       ...urlEntries,
       { id, name: name.trim(), url: url.trim(), blocked: "Yes" }
     ])
+
+    toast({
+      title: "URL successfully created!",
+      description: "Now don't go there!"
+    })
   }
 
   return (

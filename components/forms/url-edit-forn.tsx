@@ -33,6 +33,7 @@ import {
   FormMessage
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
+import { useToast } from "~/components/ui/use-toast"
 import type { UrlEntry } from "~/types"
 
 const formSchema = z.object({
@@ -53,6 +54,7 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
     }
   })
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
+  const { toast } = useToast()
 
   const onSubmit = ({ name, url }: z.infer<typeof formSchema>) => {
     const updatedEntries = urlEntries.map((urlEntry) =>
@@ -60,6 +62,10 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
     )
 
     setUrlEntries(updatedEntries)
+
+    toast({
+      description: `URL successfully changed to ${url}`
+    })
   }
 
   const switchBlockedState = () => {
@@ -78,6 +84,10 @@ export const UrlEditForm = ({ ogData }: UrlEditFormProps) => {
       (urlEntry) => urlEntry.url !== ogData.url
     )
     setUrlEntries(updatedEntries)
+
+    toast({
+      description: `URL successfully deleted`
+    })
   }
 
   return (

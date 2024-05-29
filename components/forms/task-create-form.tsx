@@ -68,6 +68,11 @@ export const TaskCreateForm = () => {
       ...tasks,
       { id, description, priority: priority as PriorityType, completed: false }
     ])
+
+    toast({
+      title: "Task Successfully Created.",
+      description: "Now go do it!"
+    })
   }
 
   return (

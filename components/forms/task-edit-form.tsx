@@ -40,6 +40,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
+import { useToast } from "~/components/ui/use-toast"
 import type { PriorityType, Task } from "~/types"
 
 const formSchema = z.object({
@@ -60,6 +61,7 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
     }
   })
   const [tasks, setTasks] = useStorage<Task[]>("tasks")
+  const { toast } = useToast()
 
   const onSubmit = ({ description, priority }: z.infer<typeof formSchema>) => {
     const updatedTasks = tasks.map((task) =>
@@ -69,6 +71,10 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
     )
 
     setTasks(updatedTasks)
+
+    toast({
+      description: `Task successfully updated to "${description}"`
+    })
   }
 
   const switchCompletedState = () => {
@@ -86,6 +92,10 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
       (task) => task.description !== ogData.description
     )
     setTasks(updatedTasks)
+
+    toast({
+      description: `Task successfully deleted`
+    })
   }
 
   return (
