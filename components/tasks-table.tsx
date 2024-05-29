@@ -1,9 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { Loader } from "lucide-react"
 
+import { DataTable } from "~/components/data-table"
 import { Badge } from "~/components/ui/badge"
-import { DataTable } from "~components/data-table"
-import type { Task } from "~types"
+import { capitalize } from "~/lib/utils"
+import type { Task } from "~/types"
 
 import { UrlCreateForm } from "./url-create-form"
 
@@ -23,11 +24,16 @@ const columns: ColumnDef<Task>[] = [
       row: {
         original: { priority }
       }
-    }) => <Badge variant="outline">{priority}</Badge>
+    }) => <Badge variant="outline">{capitalize(priority)}</Badge>
   },
   {
     accessorKey: "completed",
-    header: "Completed"
+    header: "Completed",
+    cell: ({
+      row: {
+        original: { completed }
+      }
+    }) => <p>{capitalize(completed.toString())}</p>
   }
   // {
   //   id: "actions",
