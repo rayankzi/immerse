@@ -1,4 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import { Loader } from "lucide-react"
 
 import { Badge } from "~/components/ui/badge"
 import { UrlCreateForm } from "~/components/url-create-form"
@@ -38,7 +39,7 @@ const columns: ColumnDef<UrlEntry>[] = [
   }
 ]
 
-export const UrlTable = ({ data }: UrlTableProps) => {
+const UrlTable = ({ data }: UrlTableProps) => {
   return (
     <DataTable
       columns={columns}
@@ -48,4 +49,21 @@ export const UrlTable = ({ data }: UrlTableProps) => {
       <UrlCreateForm />
     </DataTable>
   )
+}
+
+export const RenderUrlTable = ({
+  urlEntries
+}: {
+  urlEntries: UrlEntry[] | null
+}) => {
+  if (urlEntries) return <UrlTable data={urlEntries} />
+  else
+    return (
+      <div className="flex h-[50vh] w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
+          <p className="text-gray-500 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
 }

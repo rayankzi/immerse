@@ -3,16 +3,15 @@ import "~/styles/global.css"
 import {
   Folder,
   Globe,
-  Loader,
   PanelLeft,
   Settings,
   SquareCheckBig
 } from "lucide-react"
 import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { RenderTaskTable } from "~/components/tasks-table"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -30,50 +29,20 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "~/components/ui/tooltip"
-import { UrlTable } from "~/components/url-table"
-import type { UrlEntry } from "~/types"
+import { RenderUrlTable } from "~/components/url-table"
+import { defaultEntries, defaultTasks } from "~/lib/defaults"
+import type { Task, UrlEntry } from "~/types"
 import { cn } from "~lib/utils"
 
 type PageState = "urls" | "tasks"
-
-const defaultEntries: UrlEntry[] = [
-  {
-    id: uuidv4(),
-    name: "YouTube",
-    url: "https://www.youtube.com/",
-    blocked: "Yes"
-  },
-  {
-    id: uuidv4(),
-    name: "TikTok",
-    url: "https://www.tiktok.com/",
-    blocked: "Yes"
-  },
-  {
-    id: uuidv4(),
-    name: "Instagram",
-    url: "https://www.instagram.com/",
-    blocked: "Yes"
-  }
-]
-
-const RenderUrlTable = ({ urlEntries }: { urlEntries: UrlEntry[] | null }) => {
-  if (urlEntries) return <UrlTable data={urlEntries} />
-  else
-    return (
-      <div className="flex h-[50vh] w-full items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-400" />
-          <p className="text-gray-500 dark:text-gray-400">Loading...</p>
-        </div>
-      </div>
-    )
-}
 
 const Options = () => {
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
     "url-entries",
     (entries) => (entries === undefined ? defaultEntries : entries)
+  )
+  const [tasks, setTasks] = useStorage<Task[]>("tasks", (tasks) =>
+    tasks === undefined ? defaultTasks : tasks
   )
 
   const [pageState, setPageState] = useState<PageState>("urls")
@@ -209,7 +178,7 @@ const Options = () => {
           {pageState === "urls" ? (
             <RenderUrlTable urlEntries={urlEntries} />
           ) : (
-            <div>Ho</div>
+            <RenderTaskTable tasks={tasks} />
           )}
         </div>
       </div>
