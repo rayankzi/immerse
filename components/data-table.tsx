@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       <div className="flex items-center">
         <div className="relative flex-1 md:grow-0">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-[color:hsl(215.4,16.3%,46.9%)]" />
           <Input
             type="search"
             placeholder="Search..."
@@ -92,7 +92,7 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn(searchTerm)?.setFilterValue(event.target.value)
             }
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            className="w-full rounded-lg bg-[color:hsl(0,0%,100%)] pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
         <div className="ml-auto flex items-center gap-2">
