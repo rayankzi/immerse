@@ -31,7 +31,6 @@ import {
   TooltipTrigger
 } from "~/components/ui/tooltip"
 import { UrlTable } from "~/components/url-table"
-import { columns } from "~/components/url-table/columns"
 import type { UrlEntry } from "~/types"
 import { cn } from "~lib/utils"
 
@@ -59,7 +58,7 @@ const defaultEntries: UrlEntry[] = [
 ]
 
 const RenderUrlTable = ({ urlEntries }: { urlEntries: UrlEntry[] | null }) => {
-  if (urlEntries) return <UrlTable columns={columns} data={urlEntries} />
+  if (urlEntries) return <UrlTable data={urlEntries} />
   else
     return (
       <div className="flex h-[50vh] w-full items-center justify-center">
