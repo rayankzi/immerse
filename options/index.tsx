@@ -11,7 +11,8 @@ import { useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { RenderTaskTable } from "~/components/tasks-table"
+import { RenderTaskTable } from "~/components/tables/tasks-table"
+import { RenderUrlTable } from "~/components/tables/url-table"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,10 +30,9 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "~/components/ui/tooltip"
-import { RenderUrlTable } from "~/components/url-table"
 import { defaultEntries, defaultTasks } from "~/lib/defaults"
+import { cn } from "~/lib/utils"
 import type { Task, UrlEntry } from "~/types"
-import { cn } from "~lib/utils"
 
 type PageState = "urls" | "tasks"
 

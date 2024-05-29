@@ -1,7 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { Loader } from "lucide-react"
 
-import { DataTable } from "~/components/data-table"
+import { UrlCreateForm } from "~/components/forms/url-create-form"
+import { UrlEditForm } from "~/components/forms/url-edit-forn"
 import { Badge } from "~/components/ui/badge"
 import {
   Table,
@@ -12,9 +13,8 @@ import {
   TableHeader,
   TableRow
 } from "~/components/ui/table"
-import { UrlCreateForm } from "~/components/url-create-form"
-import { UrlEditForm } from "~/components/url-edit-forn"
 import type { UrlEntry } from "~/types"
+import { DataTable } from "~components/tables/data-table"
 
 interface UrlTableProps {
   data: UrlEntry[]

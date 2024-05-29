@@ -1,12 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { Loader } from "lucide-react"
 
-import { DataTable } from "~/components/data-table"
+import { UrlCreateForm } from "~/components/forms/url-create-form"
+import { DataTable } from "~/components/tables/data-table"
 import { Badge } from "~/components/ui/badge"
 import { capitalize } from "~/lib/utils"
 import type { Task } from "~/types"
-
-import { UrlCreateForm } from "./url-create-form"
 
 interface TaskTableProps {
   data: Task[]

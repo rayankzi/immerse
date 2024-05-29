@@ -4,11 +4,11 @@ import "~/styles/global.css"
 
 import { useEffect, useState } from "react"
 
+import { ConciseUrlTable } from "~/components/tables/url-table"
+import { buttonVariants } from "~/components/ui/button"
 import { Skeleton } from "~/components/ui/skeleton"
-import { ConciseUrlTable } from "~/components/url-table"
+import { cn } from "~/lib/utils"
 import type { UrlEntry } from "~/types"
-import { buttonVariants } from "~components/ui/button"
-import { cn } from "~lib/utils"
 
 interface Quote {
   text: string
