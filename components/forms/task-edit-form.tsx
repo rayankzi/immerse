@@ -40,6 +40,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
+import { ToastAction } from "~/components/ui/toast"
 import { useToast } from "~/components/ui/use-toast"
 import type { PriorityType, Task } from "~/types"
 
@@ -79,10 +80,22 @@ export const TaskEditForm = ({ ogData }: TaskEditFormProps) => {
 
   const switchCompletedState = () => {
     const updatedTasks = tasks.map((task) =>
-      task.completed === ogData.completed
-        ? { ...task, blocked: !ogData.completed }
+      task.id === ogData.id && task.completed === ogData.completed
+        ? { ...task, completed: !ogData.completed }
         : task
     ) as Task[]
+
+    if (!ogData.completed) {
+      toast({
+        title: "Task Successfully Completed.",
+        description: "Good Job!",
+        action: (
+          <ToastAction altText="Delete Task" onClick={() => deleteTask()}>
+            Delete Task
+          </ToastAction>
+        )
+      })
+    }
 
     setTasks(updatedTasks)
   }
