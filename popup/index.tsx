@@ -8,7 +8,7 @@ import { ConciseUrlTable } from "~/components/tables/url-table"
 import { buttonVariants } from "~/components/ui/button"
 import { Skeleton } from "~/components/ui/skeleton"
 import { cn } from "~/lib/utils"
-import type { UrlEntry } from "~/types"
+import type { Task, UrlEntry } from "~/types"
 
 interface Quote {
   text: string
@@ -17,6 +17,7 @@ interface Quote {
 
 const Popup = () => {
   const [urlEntries] = useStorage<UrlEntry[]>("url-entries")
+  const [tasks] = useStorage<Task[]>("tasks")
   const [quote, setQuote] = useState<Quote | null>(null)
 
   useEffect(() => {
@@ -46,6 +47,26 @@ const Popup = () => {
           <Skeleton className="h-6 w-[300px]" />
         </div>
       )}
+
+      <div className="space-y-3">
+        <h2 className="text-2xl font-bold my-2">Task List</h2>
+        <ul className="list-none p-0">
+          {tasks?.map((task) => (
+            <li className="flex items-center justify-between p-2 mb-2 border rounded-md bg-white">
+              <span className="flex-1" key={task.id}>
+                {task.description}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="/options.html"
+          target="_blank"
+          className={cn(buttonVariants({ variant: "link" }), "-ml-3 -mt-3")}>
+          Manage tasks here
+        </a>
+      </div>
 
       <h2 className="text-2xl font-bold mt-2">URLs Table</h2>
       {urlEntries ? <ConciseUrlTable data={urlEntries} /> : <p></p>}
