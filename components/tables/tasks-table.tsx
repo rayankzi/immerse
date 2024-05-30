@@ -59,7 +59,17 @@ const TaskTable = ({ data }: TaskTableProps) => {
 }
 
 export const RenderTaskTable = ({ tasks }: { tasks: Task[] | null }) => {
-  if (tasks) return <TaskTable data={tasks} />
+  const priorityOrder: Record<string, number> = {
+    high: 1,
+    medium: 2,
+    low: 3
+  }
+
+  const sortedTasks = tasks.sort(
+    (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
+  )
+
+  if (tasks) return <TaskTable data={sortedTasks} />
   else
     return (
       <div className="flex h-[50vh] w-full items-center justify-center">

@@ -1,7 +1,8 @@
 Todo List
 
-- Build Popup
+- Put tasks on Popup
+- Build
 - Build New Tab For First User
-- Build README
+- Build READMEbooty
 
 <!-- https://www.flaticon.com/authors/uniconlabs -->
