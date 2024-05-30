@@ -81,11 +81,6 @@ export const RenderUrlTable = ({
 export const ConciseUrlTable = ({ data }: UrlTableProps) => {
   return (
     <Table className="scrollbar-hide">
-      <TableCaption>
-        <a href="/options.html" target="_blank">
-          Manage them here.
-        </a>
-      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Name</TableHead>

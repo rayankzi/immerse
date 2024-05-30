@@ -6,7 +6,16 @@ import { useEffect, useState } from "react"
 
 import { ConciseUrlTable } from "~/components/tables/url-table"
 import { buttonVariants } from "~/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "~/components/ui/card"
 import { Skeleton } from "~/components/ui/skeleton"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { cn } from "~/lib/utils"
 import type { Task, UrlEntry } from "~/types"
 
@@ -48,28 +57,69 @@ const Popup = () => {
         </div>
       )}
 
-      <div className="space-y-3">
-        <h2 className="text-2xl font-bold my-2">Task List</h2>
-        <ul className="list-none p-0">
-          {tasks?.map((task) => (
-            <li className="flex items-center justify-between p-2 mb-2 border rounded-md bg-white">
-              <span className="flex-1" key={task.id}>
-                {task.description}
-              </span>
-            </li>
-          ))}
-        </ul>
+      <Tabs defaultValue="urls" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="urls">URLs</TabsTrigger>
+          <TabsTrigger value="tasks">Tasks</TabsTrigger>
+        </TabsList>
 
-        <a
-          href="/options.html"
-          target="_blank"
-          className={cn(buttonVariants({ variant: "link" }), "-ml-3 -mt-3")}>
-          Manage tasks here
-        </a>
-      </div>
+        <TabsContent value="urls">
+          <Card>
+            <CardHeader>
+              <CardTitle>URLs</CardTitle>
+              <CardDescription>
+                Look at which URLs you have blocked.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {urlEntries ? <ConciseUrlTable data={urlEntries} /> : <p></p>}
+            </CardContent>
 
-      <h2 className="text-2xl font-bold mt-2">URLs Table</h2>
-      {urlEntries ? <ConciseUrlTable data={urlEntries} /> : <p></p>}
+            <CardFooter
+              className={cn(
+                buttonVariants({ variant: "link" }),
+                "cursor-pointer pb-7 ml-2"
+              )}>
+              <a href="/options.html" target="_blank">
+                Manage URLs here
+              </a>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="tasks">
+          <Card>
+            <CardHeader>
+              <CardTitle>Tasks</CardTitle>
+              <CardDescription>
+                Look at what you have to do today.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <ul className="space-y-4">
+                {tasks?.map((task) => (
+                  <li className="flex items-center space-x-3" key={task.id}>
+                    <div className="w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700" />
+                    <span className="flex-1 text-gray-900 dark:text-gray-50 text-base">
+                      {task.description}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+
+            <CardFooter
+              className={cn(
+                buttonVariants({ variant: "link" }),
+                "cursor-pointer pb-7 ml-2"
+              )}>
+              <a href="/options.html" target="_blank">
+                Mark them as complete here
+              </a>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       <a
         href="/tabs/pomodoro-timer.html"
