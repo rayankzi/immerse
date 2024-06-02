@@ -65,9 +65,12 @@ export const RenderTaskTable = ({ tasks }: { tasks: Task[] | null }) => {
     low: 3
   }
 
-  const sortedTasks = tasks.sort(
-    (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
-  )
+  const sortedTasks = tasks
+    .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
+    .sort((a, b) => {
+      if (a.completed === b.completed) return 0
+      return a.completed ? 1 : -1
+    })
 
   if (tasks) return <TaskTable data={sortedTasks} />
   else
