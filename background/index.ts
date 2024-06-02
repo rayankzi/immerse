@@ -1,5 +1,6 @@
 export {}
 
-console.log(
-  "Live now; make now always the most precious time. Now will never come again."
-)
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL)
+    chrome.tabs.create({ url: chrome.runtime.getURL("/tabs/welcome.html") })
+})
