@@ -15,6 +15,7 @@ export const getStyle: PlasmoGetStyle = () => {
 const Warning = () => {
   const [urls, setUrls] = useState<string[]>([])
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>("url-entries")
+  const [gifUrl, setGifUrl] = useStorage<string>("gif-url")
   const currentUrl = window.location.href
 
   useEffect(() => {
@@ -33,11 +34,7 @@ const Warning = () => {
           <h1 className="text-3xl font-bold mb-4 text-black">
             What are you doing?
           </h1>
-          <img
-            src="https://media1.tenor.com/m/nCfArwGenA0AAAAd/the-rock-raising-eyebrow.gif"
-            alt="A funny GIF"
-            className="w-80 h-80"
-          />
+          <img src={gifUrl} alt="A funny GIF" className="w-80 h-80" />
           <p className="text-5xl font-bold text-red-600 pt-4">
             GO BACK TO WORK!
           </p>
