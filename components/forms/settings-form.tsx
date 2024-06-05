@@ -39,6 +39,7 @@ const SettingsForm = () => {
   const [gifUrl, setGifUrl] = useStorage<string>("gif-url")
 
   const onSubmit = ({ url }: z.infer<typeof formSchema>) => {
+    console.log("hut")
     if (!url) {
       toast({
         variant: "destructive",
@@ -66,15 +67,15 @@ const SettingsForm = () => {
       <div className="max-w-4xl items-start">
         <div className="grid gap-6">
           <Form {...form}>
-            <Card>
-              <CardHeader>
-                <CardTitle>Custom GIF</CardTitle>
-                <CardDescription>
-                  See a custom GIF when you go on a forbidden page.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Custom GIF</CardTitle>
+                  <CardDescription>
+                    See a custom GIF when you go on a forbidden page.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
                   <FormField
                     control={form.control}
                     name="url"
@@ -90,13 +91,13 @@ const SettingsForm = () => {
                       </FormItem>
                     )}
                   />
-                </form>
-              </CardContent>
+                </CardContent>
 
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
+                <CardFooter className="border-t px-6 py-4">
+                  <Button type="submit">Save</Button>
+                </CardFooter>
+              </Card>
+            </form>
           </Form>
         </div>
       </div>
