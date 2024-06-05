@@ -30,7 +30,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "~/components/ui/tooltip"
-import { defaultEntries, defaultTasks } from "~/lib/defaults"
+import { defaultEntries, defaultGifUrl, defaultTasks } from "~/lib/defaults"
 import { cn } from "~/lib/utils"
 import type { Task, UrlEntry } from "~/types"
 import SettingsForm from "~components/forms/settings-form"
@@ -44,6 +44,9 @@ const Options = () => {
   )
   const [tasks, setTasks] = useStorage<Task[]>("tasks", (tasks) =>
     tasks === undefined ? defaultTasks : tasks
+  )
+  const [gifUrl, setGifUrl] = useStorage<string>("gif-url", (gifUrl) =>
+    gifUrl === undefined ? defaultGifUrl : gifUrl
   )
 
   const [pageState, setPageState] = useState<PageState>("urls")

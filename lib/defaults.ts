@@ -43,3 +43,6 @@ export const defaultTasks: Task[] = [
     completed: true
   }
 ]
+
+export const defaultGifUrl =
+  "https://media1.tenor.com/m/nCfArwGenA0AAAAd/the-rock-raising-eyebrow.gif"
