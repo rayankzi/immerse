@@ -33,6 +33,7 @@ import {
 import { defaultEntries, defaultTasks } from "~/lib/defaults"
 import { cn } from "~/lib/utils"
 import type { Task, UrlEntry } from "~/types"
+import SettingsForm from "~components/forms/settings-form"
 
 type PageState = "urls" | "tasks" | "settings"
 
@@ -184,6 +185,7 @@ const Options = () => {
 
           {pageState === "urls" && <RenderUrlTable urlEntries={urlEntries} />}
           {pageState === "tasks" && <RenderTaskTable tasks={tasks} />}
+          {pageState === "settings" && <SettingsForm />}
         </div>
       </div>
 
