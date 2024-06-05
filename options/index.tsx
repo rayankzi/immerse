@@ -34,7 +34,7 @@ import { defaultEntries, defaultTasks } from "~/lib/defaults"
 import { cn } from "~/lib/utils"
 import type { Task, UrlEntry } from "~/types"
 
-type PageState = "urls" | "tasks"
+type PageState = "urls" | "tasks" | "settings"
 
 const Options = () => {
   const [urlEntries, setUrlEntries] = useStorage<UrlEntry[]>(
@@ -99,10 +99,15 @@ const Options = () => {
 
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
             <Tooltip>
-              <TooltipTrigger asChild>
+              <TooltipTrigger asChild onClick={() => setPageState("settings")}>
                 <a
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-[color:hsl(215.4,16.3%,46.9%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8">
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-lg text-[color:hsl(215.4,16.3%,46.9%)] transition-colors hover:text-[color:hsl(222.2,84%,4.9%)] md:h-8 md:w-8",
+                    pageState === "settings"
+                      ? activeSidebarItem
+                      : inactiveSidebarItem
+                  )}>
                   <Settings className="h-5 w-5" />
                   <span className="sr-only">Settings</span>
                 </a>
@@ -168,18 +173,17 @@ const Options = () => {
 
                 <BreadcrumbItem>
                   <BreadcrumbPage>
-                    {pageState === "urls" ? "URLs" : "Tasks"}
+                    {pageState === "urls" && "URLs"}
+                    {pageState === "tasks" && "Tasks"}
+                    {pageState === "settings" && "Settings"}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </header>
 
-          {pageState === "urls" ? (
-            <RenderUrlTable urlEntries={urlEntries} />
-          ) : (
-            <RenderTaskTable tasks={tasks} />
-          )}
+          {pageState === "urls" && <RenderUrlTable urlEntries={urlEntries} />}
+          {pageState === "tasks" && <RenderTaskTable tasks={tasks} />}
         </div>
       </div>
 

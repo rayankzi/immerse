@@ -40,7 +40,7 @@ const Popup = () => {
   return (
     <div className="px-10 py-5 scrollbar-hide">
       <h1 className="text-3xl font-bold mb-4 whitespace-nowrap">
-        Time to <span className="text-sky-500">Immerse</span> Yourself!
+        Time to <span className="text-blue-500">Immerse</span> Yourself!
       </h1>
 
       {quote ? (
