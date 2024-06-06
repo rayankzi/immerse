@@ -121,12 +121,21 @@ const Popup = () => {
         </TabsContent>
       </Tabs>
 
-      <a
-        href="/tabs/pomodoro-timer.html"
-        target="_blank"
-        className={cn(buttonVariants({ variant: "link" }), "-ml-3 mt-3")}>
-        Go to Pomodoro Timer
-      </a>
+      <div className="flex flex-col items-start">
+        <a
+          href="/tabs/pomodoro-timer.html"
+          target="_blank"
+          className={cn(buttonVariants({ variant: "link" }), "-ml-3 mt-3")}>
+          Go to Pomodoro Timer{" "}
+        </a>
+
+        <a
+          href="/options.html"
+          target="_blank"
+          className={cn(buttonVariants({ variant: "link" }), "-ml-3")}>
+          Go to Settings{" "}
+        </a>
+      </div>
     </div>
   )
 }
